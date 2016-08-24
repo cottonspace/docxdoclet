@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+	<property name="dir.work" value="work" />
+	<target name="archive">
+		<delete dir="${dir.work}" />
+		<mkdir dir="${dir.work}" />
+		<unjar src="lib/dom4j-1.6.1.jar" dest="${dir.work}" />
+		<unjar src="lib/poi-3.14-20160307.jar" dest="${dir.work}" />
+		<unjar src="lib/poi-ooxml-3.14-20160307.jar" dest="${dir.work}" />
+		<unjar src="lib/poi-ooxml-schemas-3.14-20160307.jar" dest="${dir.work}" />
+		<unjar src="lib/xmlbeans-2.6.0.jar" dest="${dir.work}" />
+		<copy todir="${dir.work}">
+			<fileset dir="bin" includes="doclet/**/*.class" />
+		</copy>
+		<jar destfile="docxdoclet-1.0.jar" basedir="${dir.work}" />
+	</target>
+	<target name="javadoc" depends="archive">
+		<javadoc access="private" additionalparam="-encoding utf-8" packagenames="doclet.docx" sourcepath="src">
+			<doclet name="doclet.docx.DocxDoclet" path="docxdoclet-1.0.jar">
+				<param name="-file" value="document.docx" />
+				<param name="-title" value="SUBJECT" />
+				<param name="-subtitle" value="SUBTITLE" />
+				<param name="-version" value="VER 1.0" />
+				<param name="-company" value="XXX PROJECT" />
+				<param name="-copyright" value="COPYRIGHT 2016 XXX ALL RIGHTS RESERVED." />
+			</doclet>
+		</javadoc>
+	</target>
+</project>
