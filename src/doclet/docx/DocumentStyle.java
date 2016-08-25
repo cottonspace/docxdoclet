@@ -55,7 +55,7 @@ public class DocumentStyle {
 
 		// 文字を設定
 		XWPFRun run = paragraph.createRun();
-		run.setFontFamily("Meiryo UI");
+		run.setFontFamily(Options.getOption("font1", "Meiryo UI"));
 		run.setFontSize(9);
 		run.setBold(false);
 		run.setItalic(false);
@@ -139,7 +139,6 @@ public class DocumentStyle {
 		setLineSpacing(paragraph, 240);
 
 		// 文字を設定
-		run.setFontFamily("Meiryo UI");
 		run.setFontSize(14);
 
 		// 出力ハンドルを返却
@@ -165,7 +164,6 @@ public class DocumentStyle {
 		paragraph.setSpacingBeforeLines(spaces);
 
 		// 文字を設定
-		run.setFontFamily("Meiryo UI");
 		run.setFontSize(14);
 
 		// 出力ハンドルを返却
@@ -191,7 +189,6 @@ public class DocumentStyle {
 		paragraph.setSpacingBeforeLines(spaces);
 
 		// 文字を設定
-		run.setFontFamily("Meiryo UI");
 		run.setFontSize(10);
 
 		// 出力ハンドルを返却

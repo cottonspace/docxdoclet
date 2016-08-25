@@ -68,27 +68,15 @@ public class DocumentBuilder {
 			// Javadoc のルートドキュメントを取得
 			root = rootDoc;
 
-			// オプションを取得
-			String file = getOption(root.options(), "-file", "document.docx");
-			String title = getOption(root.options(), "-title", "");
-			String subtitle = getOption(root.options(), "-subtitle", "");
-			String version = getOption(root.options(), "-version", "");
-			String company = getOption(root.options(), "-company", "");
-			String copyright = getOption(root.options(), "-copyright", "");
-
 			// Word 文書を生成
 			word = new XWPFDocument();
 
 			// ヘッダとフッタを作成
-			makeHeaderFooter(title + " " + subtitle + " " + version, true);
-			makeHeaderFooter(copyright, false);
+			makeHeaderFooter(Options.getOption("title") + " " + Options.getOption("subtitle"), true);
+			makeHeaderFooter(Options.getOption("copyright"), false);
 
 			// 表紙を作成
-			Locale locale = new Locale("ja", "JP", "JP");
-			Calendar cal = Calendar.getInstance(locale);
-			DateFormat jformat = new SimpleDateFormat("GGGGy年M月d日", locale);
-			String stamp = jformat.format(cal.getTime());
-			makeCoverPage(title, subtitle, version, stamp, company);
+			makeCoverPage();
 
 			// 出力済パッケージリストを初期化
 			packages = new ArrayList<PackageDoc>();
@@ -97,7 +85,7 @@ public class DocumentBuilder {
 			makeClassPages();
 
 			// Word ファイル保存
-			word.write(new FileOutputStream(file));
+			word.write(new FileOutputStream(Options.getOption("file", "document.docx")));
 
 		} finally {
 
@@ -112,65 +100,37 @@ public class DocumentBuilder {
 	}
 
 	/**
-	 * オプション文字列を取得します。
-	 * <p>
-	 * 該当するオプションが指定されていない場合はデフォルト値を返却します。
-	 *
-	 * @param options
-	 *            オプションが格納された配列
-	 * @param name
-	 *            オプション名
-	 * @param defaultValue
-	 *            オプションが指定されていない場合に使用する値
-	 * @return オプションの値
-	 */
-	private static String getOption(String options[][], String name, String defaultValue) {
-		for (int i = 0; i < options.length; i++) {
-			String[] opt = options[i];
-			if (opt[0].equals(name)) {
-				return opt[1];
-			}
-		}
-		return defaultValue;
-	}
-
-	/**
 	 * 表紙を作成します。
-	 *
-	 * @param title
-	 *            題名
-	 * @param subtitle
-	 *            副題
-	 * @param version
-	 *            バージョン情報
-	 * @param stamp
-	 *            日付
-	 * @param company
-	 *            作成者名
 	 */
-	private void makeCoverPage(String title, String subtitle, String version, String stamp, String company) {
+	private void makeCoverPage() {
 
 		// POI 操作
 		XWPFRun run;
+
+		// 日付を取得
+		Locale locale = new Locale("ja", "JP", "JP");
+		Calendar cal = Calendar.getInstance(locale);
+		DateFormat jformat = new SimpleDateFormat("GGGGy年M月d日", locale);
+		String stamp = jformat.format(cal.getTime());
 
 		// 表紙の情報を出力
 		run = DocumentStyle.setCoverParagraph(word.createParagraph(), 800);
 		run.setFontSize(28);
 		run.setBold(true);
-		run.setText(title);
+		run.setText(Options.getOption("title"));
 		run = DocumentStyle.setCoverParagraph(word.createParagraph(), 200);
 		run.setFontSize(20);
 		run.setBold(true);
-		run.setText(subtitle);
+		run.setText(Options.getOption("subtitle"));
 		run = DocumentStyle.setCoverParagraph(word.createParagraph(), 300);
 		run.setFontSize(18);
-		run.setText(version);
+		run.setText(Options.getOption("version"));
 		run = DocumentStyle.setCoverParagraph(word.createParagraph(), 800);
 		run.setFontSize(16);
 		run.setText(stamp);
 		run = DocumentStyle.setCoverParagraph(word.createParagraph(), 300);
 		run.setFontSize(20);
-		run.setText(company);
+		run.setText(Options.getOption("company"));
 	}
 
 	/**
@@ -624,7 +584,7 @@ public class DocumentBuilder {
 					// Javadocインラインタグ付き文字として出力
 					if (!value.isEmpty()) {
 						XWPFRun runTaggedString = DocumentStyle.getDefaultRun(word.getLastParagraph(), -1);
-						runTaggedString.setFontFamily("Consolas");
+						runTaggedString.setFontFamily(Options.getOption("font2", "Consolas"));
 						runTaggedString.setText(value);
 						run = DocumentStyle.getDefaultRun(word.getLastParagraph(), -1);
 					}

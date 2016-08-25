@@ -12,8 +12,7 @@ public class DocxDoclet extends Doclet {
 	/**
 	 * Javadoc 生成処理を実行します。
 	 * <p>
-	 * 実行すると Javadoc 情報を Word 文書として生成します。
-	 * 既に同名のファイルが存在する場合は上書きされます。
+	 * 実行すると Javadoc 情報を Word 文書として生成します。 既に同名のファイルが存在する場合は上書きされます。
 	 *
 	 * @param rootDoc
 	 *            Javadoc のルートドキュメント
@@ -22,6 +21,7 @@ public class DocxDoclet extends Doclet {
 	public static boolean start(RootDoc rootDoc) {
 		DocumentBuilder creator = new DocumentBuilder();
 		try {
+			Options.options = rootDoc.options();
 			creator.create(rootDoc);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,22 +38,7 @@ public class DocxDoclet extends Doclet {
 	 * @return 対応する引数自身を含むパラメタの個数
 	 */
 	public static int optionLength(String option) {
-		if (option.equals("-file")) {
-			return 2;
-		}
-		if (option.equals("-title")) {
-			return 2;
-		}
-		if (option.equals("-subtitle")) {
-			return 2;
-		}
-		if (option.equals("-version")) {
-			return 2;
-		}
-		if (option.equals("-company")) {
-			return 2;
-		}
-		if (option.equals("-copyright")) {
+		if (Options.isSupportedOption(option)) {
 			return 2;
 		}
 		return 0;
