@@ -12,7 +12,7 @@ public class DocxDoclet extends Doclet {
 	/**
 	 * Javadoc 生成処理を実行します。
 	 * <p>
-	 * 実行すると Javadoc 情報を javadoc.docx の名前の Word 文書として生成します。
+	 * 実行すると Javadoc 情報を Word 文書として生成します。
 	 * 既に同名のファイルが存在する場合は上書きされます。
 	 *
 	 * @param rootDoc
