@@ -1,4 +1,4 @@
-# docxdoclet
+# DocxDoclet
 Doclet which creates Javadoc as Microsoft Word document.
 
 ## Copyright and License
