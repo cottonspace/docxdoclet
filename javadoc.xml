@@ -17,14 +17,14 @@
 	<target name="javadoc" depends="archive">
 		<javadoc access="private" additionalparam="-encoding utf-8" packagenames="doclet.docx" sourcepath="src">
 			<doclet name="doclet.docx.DocxDoclet" path="docxdoclet-1.0.jar">
-				<param name="-file" value="document.docx" />
+				<param name="-file" value="sample/document.docx" />
 				<param name="-font1" value="Meiryo UI" />
 				<param name="-font2" value="Consolas" />
-				<param name="-title" value="SUBJECT" />
-				<param name="-subtitle" value="SUBTITLE" />
-				<param name="-version" value="VER 1.0" />
-				<param name="-company" value="XXX PROJECT" />
-				<param name="-copyright" value="COPYRIGHT 2016 XXX ALL RIGHTS RESERVED." />
+				<param name="-title" value="DocxDoclet" />
+				<param name="-subtitle" value="詳細設計書" />
+				<param name="-version" value="1.0" />
+				<param name="-company" value="sample" />
+				<param name="-copyright" value="COPYRIGHT 2016 sample ALL RIGHTS RESERVED." />
 			</doclet>
 		</javadoc>
 	</target>
