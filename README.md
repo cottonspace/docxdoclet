@@ -1,10 +1,6 @@
 # DocxDoclet
 Doclet which creates Javadoc as Microsoft Word document.
 
-## Homepage
-
-[http://www.csync.net/blog/pc/docxdoclet/](http://www.csync.net/blog/pc/docxdoclet/)
-
 ## How to use as Ant task
 
 ```xml
